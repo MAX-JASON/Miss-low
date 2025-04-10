@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>蘆小姐保險保障深度分析報告</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body {
             font-family: 'Microsoft JhengHei', Arial, sans-serif;
@@ -52,14 +53,8 @@
             background-color: #f5f5f5;
             padding: 20px;
             border-radius: 5px;
-        }
-        .chart {
-            max-width: 100%;
-            height: auto;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            background-color: white;
-            padding: 10px;
+            position: relative;
+            height: 400px;
         }
         .chart-title {
             font-weight: bold;
@@ -241,7 +236,7 @@
         
         <div class="chart-container">
             <div class="chart-title">圖1：台灣醫療自費比例趨勢（2015-2023）</div>
-            <img src="https://via.placeholder.com/800x400/0056b3/ffffff?text=醫療自費比例趨勢折線圖" alt="醫療自費比例趨勢折線圖" class="chart">
+            <canvas id="trendChart"></canvas>
             <p>根據健保署統計，醫療自費比例從2015年的18%上升至2023年的32%，其中手術相關自費項目增長最為明顯。</p>
         </div>
         
@@ -249,14 +244,14 @@
             <div class="column">
                 <div class="chart-container">
                     <div class="chart-title">圖2：住院自費項目比例分布</div>
-                    <img src="https://via.placeholder.com/400x300/4caf50/ffffff?text=住院自費項目圓餅圖" alt="住院自費項目圓餅圖" class="chart">
+                    <canvas id="pieChart"></canvas>
                     <p>手術材料費佔自費項目42%，為最大支出項目，現有保單對此類費用保障嚴重不足。</p>
                 </div>
             </div>
             <div class="column">
                 <div class="chart-container">
                     <div class="chart-title">圖3：各類手術自費金額比較</div>
-                    <img src="https://via.placeholder.com/400x300/ff9800/ffffff?text=手術自費金額柱狀圖" alt="手術自費金額柱狀圖" class="chart">
+                    <canvas id="barChart"></canvas>
                     <p>心臟手術平均自費25萬元，骨科手術18萬元，均遠超現有保單5萬元的傷害醫療限額。</p>
                 </div>
             </div>
@@ -303,7 +298,7 @@
         
         <div class="chart-container">
             <div class="chart-title">圖4：手術全過程費用 vs 現有保障對比圖</div>
-            <img src="https://via.placeholder.com/800x400/9c27b0/ffffff?text=手術費用對比分析圖" alt="手術費用對比分析圖" class="chart">
+            <canvas id="comparisonChart"></canvas>
             <p>現有保障僅能覆蓋約15-20%的實際醫療支出，且多數高額自費項目不在保障範圍內。</p>
         </div>
     </div>
@@ -339,12 +334,12 @@
                 <p>現有癌症身故僅5.48萬，無法支應治療費用。</p>
             </div>
             <div class="column">
-                <h3>重大疾病發生率</h3>
+                <h3>女性重大疾病發生率</h3>
                 <ul>
-                    <li>30歲男性罹癌機率：約8%</li>
-                    <li>40歲男性罹癌機率：約15%</li>
-                    <li>一生中需重大手術機率：約65%</li>
-                    <li>住院超過2週機率：約40%</li>
+                    <li>30歲女性罹癌機率：約10%</li>
+                    <li>40歲女性罹癌機率：約18%</li>
+                    <li>女性一生中需重大手術機率：約70%</li>
+                    <li>住院超過2週機率：約45%</li>
                 </ul>
                 <p>數據來源：衛福部國民健康署</p>
             </div>
@@ -356,28 +351,28 @@
         
         <div class="two-column">
             <div class="column">
-                <h3>必備保障項目</h3>
+                <h3>女性必備保障項目</h3>
                 <ol>
                     <li><strong>實支實付醫療險</strong> - 建議額度30萬/次</li>
                     <li><strong>重大疾病險</strong> - 一次性給付100萬</li>
-                    <li><strong>癌症險</strong> - 初次罹癌50萬+年給付50萬</li>
+                    <li><strong>女性癌症險</strong> - 特別加強乳癌、子宮頸癌保障</li>
                     <li><strong>手術全過程保障</strong> - 涵蓋術前術後費用</li>
                 </ol>
             </div>
             <div class="column">
                 <h3>為什麼現在就該行動？</h3>
                 <ul>
-                    <li>每延遲1年投保，保費平均增加5-8%</li>
-                    <li>健康狀況變化可能導致拒保</li>
-                    <li>風險隨時可能發生，無法預測</li>
+                    <li>女性30歲後保費逐年增加5-10%</li>
+                    <li>婦科健康變化可能導致拒保</li>
+                    <li>女性癌症發生率逐年上升</li>
                     <li>現有保障缺口等於財務漏洞</li>
                 </ul>
             </div>
         </div>
         
         <div style="text-align: center; margin-top: 30px;">
-            <a href="#" class="cta-button">立即預約專業保障規劃</a>
-            <p>限時提供保單健檢優惠，名額有限</p>
+            <a href="#" class="cta-button">立即預約女性專屬保障規劃</a>
+            <p>限時提供女性保單健檢優惠，名額有限</p>
         </div>
     </div>
 
@@ -385,5 +380,146 @@
         <p>本報告依據公開數據及專業分析製作，實際保障內容以保單條款為準</p>
         <p>國泰人壽保險股份有限公司 © 2023 版權所有</p>
     </div>
+
+    <script>
+        // 圖1：台灣醫療自費比例趨勢折線圖
+        const trendCtx = document.getElementById('trendChart').getContext('2d');
+        const trendChart = new Chart(trendCtx, {
+            type: 'line',
+            data: {
+                labels: ['2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023'],
+                datasets: [{
+                    label: '醫療自費比例 (%)',
+                    data: [18, 20, 22, 24, 26, 27, 29, 30, 32],
+                    borderColor: '#0056b3',
+                    backgroundColor: 'rgba(0, 86, 179, 0.1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.3
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: '自費比例 (%)'
+                        }
+                    }
+                }
+            }
+        });
+
+        // 圖2：住院自費項目比例分布圓餅圖
+        const pieCtx = document.getElementById('pieChart').getContext('2d');
+        const pieChart = new Chart(pieCtx, {
+            type: 'pie',
+            data: {
+                labels: ['手術材料費', '特殊檢查費', '自費藥物', '病房差額', '其他'],
+                datasets: [{
+                    data: [42, 25, 18, 10, 5],
+                    backgroundColor: [
+                        '#0056b3',
+                        '#4caf50',
+                        '#ff9800',
+                        '#9c27b0',
+                        '#f44336'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'right'
+                    }
+                }
+            }
+        });
+
+        // 圖3：各類手術自費金額比較柱狀圖
+        const barCtx = document.getElementById('barChart').getContext('2d');
+        const barChart = new Chart(barCtx, {
+            type: 'bar',
+            data: {
+                labels: ['心臟手術', '骨科手術', '婦科手術', '腸胃手術', '神經外科'],
+                datasets: [{
+                    label: '平均自費金額 (萬元)',
+                    data: [25, 18, 15, 12, 22],
+                    backgroundColor: [
+                        'rgba(0, 86, 179, 0.7)',
+                        'rgba(0, 86, 179, 0.7)',
+                        'rgba(0, 86, 179, 0.7)',
+                        'rgba(0, 86, 179, 0.7)',
+                        'rgba(0, 86, 179, 0.7)'
+                    ],
+                    borderColor: [
+                        '#0056b3',
+                        '#0056b3',
+                        '#0056b3',
+                        '#0056b3',
+                        '#0056b3'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: '自費金額 (萬元)'
+                        }
+                    }
+                }
+            }
+        });
+
+        // 圖4：手術全過程費用 vs 現有保障對比圖
+        const comparisonCtx = document.getElementById('comparisonChart').getContext('2d');
+        const comparisonChart = new Chart(comparisonCtx, {
+            type: 'bar',
+            data: {
+                labels: ['術前檢查', '手術進行', '住院恢復', '術後復健'],
+                datasets: [
+                    {
+                        label: '實際自費支出 (元)',
+                        data: [12000, 150000, 50000, 20000],
+                        backgroundColor: 'rgba(244, 67, 54, 0.7)',
+                        borderColor: '#f44336',
+                        borderWidth: 1
+                    },
+                    {
+                        label: '現有保障給付 (元)',
+                        data: [0, 30000, 10000, 0],
+                        backgroundColor: 'rgba(0, 86, 179, 0.7)',
+                        borderColor: '#0056b3',
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: '金額 (元)'
+                        }
+                    }
+                }
+            }
+        });
+    </script>
 </body>
 </html>
